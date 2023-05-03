@@ -32,9 +32,59 @@
   </head>
 
   <body>
-
-    <div class="mb-1">
-      <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="mb-5">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light px-0 py-3">
+        <div class="container-xl">
+          <!-- Logo -->
+          <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="" class="h-8" alt="View.it">
+          </a>
+          <!-- Navbar toggle -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- Collapse -->
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <!-- Nav -->
+            <div class="navbar-nav w-75 mx-auto">
+              <div class="input-group">
+                <input type="text" class="form-control rounded-left" placeholder="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-secondary rounded-right" type="button">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            {% if request.user.is_authenticated %}
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ request.user.username }}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" href="{% url 'users:detail' request.user.username %}">{% translate "Your Channel" %}</a></li>
+                  <li><a class="dropdown-item" href="{% url 'users:update' %}">{% translate "Edit Info" %}</a></li>
+                  <li><a class="dropdown-item" href="{% url 'account_logout' %}">{% translate "Sign Out" %}</a></li>
+                </ul>
+              </div>
+            {% else %}
+              <!-- Right navigation -->
+              <div class="navbar-nav ms-lg-4">
+                <a class="nav-item nav-link" href="{% url 'account_login' %}">
+                  {% translate "Sign in" %}
+                </a>
+              </div>
+              <!-- Action -->
+              <div class="d-flex align-items-lg-center mt-3 mt-lg-0">
+                <a href="{% url 'account_signup' %}" class="btn btn-sm btn-primary w-full w-lg-auto">
+                  {% translate "Register" %}
+                </a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
+      {% comment %} <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container-fluid">
           <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -45,9 +95,6 @@
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
                 <a class="nav-link" href="{% url 'home' %}">Home <span class="visually-hidden">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">About</a>
               </li>
               {% if request.user.is_authenticated %}
                 <li class="nav-item">
@@ -72,7 +119,7 @@
             </ul>
           </div>
         </div>
-      </nav>
+      </nav> {% endcomment %}
 
     </div>
 
