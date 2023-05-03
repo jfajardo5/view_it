@@ -12,9 +12,9 @@ class User(AbstractUser):
     check forms.SignupForm and forms.SocialSignupForms accordingly.
     """
 
-    name = None  # ignores AbstractUser's 'name' field
+    name = CharField(_("Name of User"), blank=True, max_length=255)
     name_validator = RegexValidator(
-        regex=r"^[A-Za-z]{1,30}$"  # 1 to 30 characters in length. Alphabetic characters only.
+        regex=r"^[A-Za-z]{2,30}$"  # 2 to 30 characters in length. Alphabetic characters only.
     )
 
     username = CharField(
