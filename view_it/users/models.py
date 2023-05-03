@@ -1,8 +1,9 @@
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import RegexValidator
-from django.db.models import CharField, FileField, TextField
+from django.db.models import CharField, EmailField, FileField, TextField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+
+from view_it.users.validators import validate_name, validate_unique_email
 
 
 class User(AbstractUser):
@@ -13,8 +14,13 @@ class User(AbstractUser):
     """
 
     name = CharField(_("Name of User"), blank=True, max_length=255)
-    name_validator = RegexValidator(
-        regex=r"^[A-Za-z]{2,30}$"  # 2 to 30 characters in length. Alphabetic characters only.
+
+    email = EmailField(
+        _("email address"),
+        blank=True,
+        unique=True,
+        validators=[validate_unique_email],
+        help_text=_("Required. Must be an unique and valid email address."),
     )
 
     username = CharField(
@@ -27,7 +33,7 @@ class User(AbstractUser):
     first_name = CharField(
         _("First Name"),
         null=True,
-        validators=[name_validator],
+        validators=[validate_name],
         help_text="Required. 30 characters or fewer. Alphabetical characters only.",
         max_length=30,
     )
@@ -35,7 +41,7 @@ class User(AbstractUser):
     last_name = CharField(
         _("Last Name"),
         null=True,
-        validators=[name_validator],
+        validators=[validate_name],
         help_text="Required. 30 characters or fewer. Alphabetical characters only.",
         max_length=30,
     )

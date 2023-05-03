@@ -5,6 +5,8 @@ from django.contrib.auth import forms as admin_forms
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
+from view_it.users.validators import validate_name, validate_unique_email
+
 User = get_user_model()
 
 
@@ -33,16 +35,24 @@ class UserSignupForm(SignupForm):
     Check UserSocialSignupForm for accounts created from social.
     """
 
+    email = forms.EmailField(
+        label=_("Email"),
+        validators=[validate_unique_email],
+        widget=forms.TextInput(attrs={"placeholder": _("Email"), "autocomplete": "email"}),
+    )
+
     first_name = forms.CharField(
         label=_("First Name"),
         min_length=2,
         max_length=30,
+        validators=[validate_name],
         widget=forms.TextInput(attrs={"placeholder": _("First Name"), "autocomplete": "first_name"}),
     )
     last_name = forms.CharField(
         label=_("Last Name"),
         min_length=2,
         max_length=30,
+        validators=[validate_name],
         widget=forms.TextInput(attrs={"placeholder": _("Last Name"), "autocomplete": "last_name"}),
     )
 
