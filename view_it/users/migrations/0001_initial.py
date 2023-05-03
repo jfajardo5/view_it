@@ -47,8 +47,8 @@ class Migration(migrations.Migration):
                         error_messages={
                             "unique": "A user with that username already exists."
                         },
-                        help_text="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
-                        max_length=150,
+                        help_text="Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                        max_length=30,
                         unique=True,
                         validators=[
                             django.contrib.auth.validators.UnicodeUsernameValidator()

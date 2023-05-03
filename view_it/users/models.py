@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
-from django.db.models import CharField
+from django.core.validators import RegexValidator
+from django.db.models import CharField, FileField, TextField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -11,10 +12,37 @@ class User(AbstractUser):
     check forms.SignupForm and forms.SocialSignupForms accordingly.
     """
 
-    # First and last name do not cover name patterns around the globe
-    name = CharField(_("Name of User"), blank=True, max_length=255)
-    first_name = None  # type: ignore
-    last_name = None  # type: ignore
+    name = None  # ignores AbstractUser's 'name' field
+    name_validator = RegexValidator(
+        regex=r"^[A-Za-z]{1,30}$"  # 1 to 30 characters in length. Alphabetic characters only.
+    )
+
+    username = CharField(
+        _("Username"),
+        max_length=30,
+        unique=True,
+        help_text=_("Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."),
+    )
+
+    first_name = CharField(
+        _("First Name"),
+        null=True,
+        validators=[name_validator],
+        help_text="Required. 30 characters or fewer. Alphabetical characters only.",
+        max_length=30,
+    )
+
+    last_name = CharField(
+        _("Last Name"),
+        null=True,
+        validators=[name_validator],
+        help_text="Required. 30 characters or fewer. Alphabetical characters only.",
+        max_length=30,
+    )
+
+    avatar = FileField(_("Avatar"), upload_to="avatars/%Y/%m/%d/%H/", blank=True)
+
+    channel_description = TextField(_("Channel Description"), blank=True)
 
     def get_absolute_url(self) -> str:
         """Get URL for user's detail view.
