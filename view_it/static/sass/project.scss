@@ -1,8 +1,6 @@
 @import 'custom_bootstrap_vars';
 @import '~bootstrap/scss/bootstrap';
 
-// project specific CSS goes here
-
 ///////////////
 // Variables //
 ///////////////
@@ -33,4 +31,12 @@ $red: #b94a48;
   background-color: $pink;
   border-color: $dark-pink;
   color: $red;
+}
+
+////////////
+// Avatar //
+////////////
+
+.profile-view-avatar {
+  width: 5rem;
 }
