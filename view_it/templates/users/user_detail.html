@@ -1,28 +1,28 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}User: {{ object.username }}{% endblock %}
+{% block title %}View.it | @{{ object.username }}{% endblock %}
 
 {% block content %}
 <div class="container">
-
-  <div class="row">
-    <div class="col-sm-12">
-
-      <h2>{{ object.username }}</h2>
-      {% if object.name %}
-        <p>{{ object.name }}</p>
+  <section class="border-bottom border-top p-4 mb-5 d-inline-flex justify-content-between align-items-center w-100">
+    <div>
+      <h1><img class="rounded-circle profile-view-avatar border" src="{{ object.avatar.url }}" alt="{% translate "Profile Picture" %}"> {{ object.username }}</h1>
+      {% if object.channel_description %}
+        <p>{{ object.channel_description }}</p>
       {% endif %}
     </div>
-  </div>
+    <div>
+      <a class="btn btn-danger font-weight-bold" href="" role="button">{% translate "Subscribe!" %}</a>
+    </div>
+  </section>
 
 {% if object == request.user %}
 <!-- Action buttons -->
 <div class="row">
 
   <div class="col-sm-12">
-    <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">My Info</a>
-    <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
+
     <!-- Your Stuff: Custom user template urls -->
   </div>
 
