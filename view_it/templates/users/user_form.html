@@ -1,17 +1,27 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 
 {% block title %}{{ user.username }}{% endblock %}
 
 {% block content %}
-  <h1>{{ user.username }}</h1>
-  <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <div class="control-group">
-      <div class="controls">
-        <button type="submit" class="btn btn-primary">Update</button>
-      </div>
+  <section class="border-bottom border-top p-4 mb-5 d-inline-flex justify-content-between align-items-center w-100">
+    <div>
+      <h1><img class="rounded-circle profile-view-avatar border" src="{{ user.avatar.url }}" alt="{% translate "Profile Picture" %}"> {{ user.username }}</h1>
     </div>
-  </form>
+    <div>
+      <a class="btn btn-secondary" href="{% url 'account_email' %}" role="button">{% translate "Manage Email Addresses" %}</a>
+    </div>
+  </section>
+  <section class="mb-5">
+    <form class="form-horizontal" method="post" action="{% url 'users:update' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
+        </div>
+      </div>
+    </form>
+  </section>
 {% endblock %}
