@@ -1,15 +1,46 @@
 # View It
 
-FOSS video hosting platform
+## View It is a fun FOSS video hosting platform I am building as a side project.
 
-[![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 License: MIT
 
-## Settings
+## Getting up and running with docker
 
-Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
+### Pre-requisites
+
+- Git
+- Python 3.11
+- python-venv
+- Docker Compose (https://docs.docker.com/compose/install/)
+- Pre-commit (https://pre-commit.com/)
+
+### Setup
+
+- Create a venv environment for python to run in (Only needed if you wish to contribute via git):
+
+      $ python -m venv view_it_venv
+      $ cd view_it_venv && source bin/activate
+
+- Install pre-commit (Only needed if you wish to contribute via git):
+
+      $ pip install pre-commit
+
+- Clone this repository:
+
+      $ git clone https://github.com/jfajardo5/view_it
+
+- Build a local docker image (The first docker build will take a while):
+
+      $ cd view_it
+      $ docker compose -f local.yml build
+
+- Start up the newly created docker container:
+
+      $ docker compose -f local.yml up
+
+- ### That's it! The site should be accessible at http://localhost:3000/ after the container has been fully initialized!
 
 ## Basic Commands
 
@@ -19,7 +50,7 @@ Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings
 
 - To create a **superuser account**, use this command:
 
-      $ python manage.py createsuperuser
+      $ docker compose -f local.yml run --rm django python manage.py createsuperuser
 
 For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
 
@@ -27,80 +58,18 @@ For convenience, you can keep your normal user logged in on Chrome and your supe
 
 Running type checks with mypy:
 
-    $ mypy view_it
+    $ docker compose -f local.yml run --rm django mypy view_it
 
-### Test coverage
+### Test coverage with pytest
 
-To run the tests, check your test coverage, and generate an HTML coverage report:
+To run the tests and check your test coverage:
 
-    $ coverage run -m pytest
-    $ coverage html
-    $ open htmlcov/index.html
+    $ docker compose -f local.yml run --rm django pytest
 
-#### Running tests with pytest
-
-    $ pytest
-
-### Live reloading and Sass CSS compilation
-
-Moved to [Live reloading and SASS compilation](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html#sass-compilation-live-reloading).
-
-### Celery
-
-This app comes with Celery.
-
-To run a celery worker:
-
-```bash
-cd view_it
-celery -A config.celery_app worker -l info
-```
-
-Please note: For Celery's import magic to work, it is important _where_ the celery commands are run. If you are in the same folder with _manage.py_, you should be right.
-
-To run [periodic tasks](https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html), you'll need to start the celery beat scheduler service. You can start it as a standalone process:
-
-```bash
-cd view_it
-celery -A config.celery_app beat
-```
-
-or you can embed the beat service inside a worker with the `-B` option (not recommended for production use):
-
-```bash
-cd view_it
-celery -A config.celery_app worker -B -l info
-```
-
-### Email Server
+## Email Server
 
 In development, it is often nice to be able to see emails that are being sent from your application. For that reason local SMTP server [MailHog](https://github.com/mailhog/MailHog) with a web interface is available as docker container.
 
-Container mailhog will start automatically when you will run all docker containers.
-Please check [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html) for more details how to start all containers.
+Container mailhog will start automatically when you run all docker containers.
 
 With MailHog running, to view messages that are sent by your application, open your browser and go to `http://127.0.0.1:8025`
-
-### Sentry
-
-Sentry is an error logging aggregator service. You can sign up for a free account at <https://sentry.io/signup/?code=cookiecutter> or download and host it yourself.
-The system is set up with reasonable defaults, including 404 logging and integration with the WSGI application.
-
-You must set the DSN url in production.
-
-## Deployment
-
-The following details how to deploy this application.
-
-### Docker
-
-See detailed [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html).
-
-### Custom Bootstrap Compilation
-
-The generated CSS is set up with automatic Bootstrap recompilation with variables of your choice.
-Bootstrap v5 is installed using npm and customised by tweaking your variables in `static/sass/custom_bootstrap_vars`.
-
-You can find a list of available variables [in the bootstrap source](https://github.com/twbs/bootstrap/blob/v5.1.3/scss/_variables.scss), or get explanations on them in the [Bootstrap docs](https://getbootstrap.com/docs/5.1/customize/sass/).
-
-Bootstrap's javascript as well as its dependencies are concatenated into a single file: `static/js/vendors.js`.

@@ -63,7 +63,7 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li><a class="dropdown-item" href="{% url 'users:detail' request.user.username %}">{% translate "Your Channel" %}</a></li>
-                  <li><a class="dropdown-item" href="{% url 'users:update' %}">{% translate "Edit Info" %}</a></li>
+                  <li><a class="dropdown-item" href="{% url 'users:update' %}">{% translate "Edit Channel Info" %}</a></li>
                   <li><a class="dropdown-item" href="{% url 'account_logout' %}">{% translate "Sign Out" %}</a></li>
                 </ul>
               </div>
@@ -98,7 +98,7 @@
               </li>
               {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'users:detail' request.user.username %}">{% translate "My Profile" %}</a>
+                  <a class="nav-link" href="{% url 'users:detail' request.user.username %}">{% translate "My Channel" %}</a>
                 </li>
                 <li class="nav-item">
                   {# URL provided by django-allauth/account/urls.py #}
