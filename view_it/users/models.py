@@ -3,7 +3,7 @@ from django.db.models import CharField, EmailField, FileField, TextField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from view_it.users.validators import validate_name, validate_unique_email
+from .validators import validate_avatar_file_type, validate_name, validate_unique_email
 
 
 class User(AbstractUser):
@@ -46,7 +46,13 @@ class User(AbstractUser):
         max_length=30,
     )
 
-    avatar = FileField(_("Avatar"), upload_to="avatars/%Y/%m/%d/%H/", blank=True)
+    avatar = FileField(
+        _("Avatar"),
+        upload_to="avatars/%Y/%m/%d/%H/",
+        blank=True,
+        validators=[validate_avatar_file_type],
+        help_text="Supported file types are: .jpg, .jpeg, .png, and .gif",
+    )
 
     channel_description = TextField(_("Channel Description"), blank=True)
 

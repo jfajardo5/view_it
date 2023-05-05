@@ -1,3 +1,4 @@
+import magic
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
@@ -24,3 +25,20 @@ def validate_unique_email(value):
         _("An account has already registered with %(value)s. Try resetting your password."),
         params={"value": value},
     )
+
+
+def validate_avatar_file_type(value):
+    """
+    Validator that verifies user's avatar file type.
+    """
+    allowed_types = [
+        "image/jpeg",  # JPEG/JPG (Joint Photographic Experts Group)
+        "image/png",  # PNG (Portable Network Graphics)
+        "image/gif",  # GIF (Graphics Interchange Format)
+    ]
+    try:
+        file_type = magic.from_buffer(value.read(), mime=True)
+    except file_type not in allowed_types:
+        raise ValidationError
+
+    return
