@@ -63,6 +63,7 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li><a class="dropdown-item" href="{% url 'users:detail' request.user.username %}">{% translate "Your Channel" %}</a></li>
+                  <li><a class="dropdown-item" href="{% url 'videos:upload' %}">{% translate "Upload a Video" %}</a></li>
                   <li><a class="dropdown-item" href="{% url 'users:update' %}">{% translate "Edit Channel Info" %}</a></li>
                   <li><a class="dropdown-item" href="{% url 'account_logout' %}">{% translate "Sign Out" %}</a></li>
                 </ul>
