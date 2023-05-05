@@ -1,33 +1,90 @@
 {% extends "base.html" %}
 {% load static i18n %}
-
 {% block title %}View.it | @{{ object.username }}{% endblock %}
 
 {% block content %}
 <div class="container">
+
   <section class="border-bottom border-top p-4 mb-5 d-inline-flex justify-content-between align-items-center w-100">
-    <div>
-      <h1><img class="rounded-circle profile-view-avatar border" src="{{ object.avatar.url }}" alt="{% translate "Profile Picture" %}"> {{ object.username }}</h1>
-      {% if object.channel_description %}
-        <p>{{ object.channel_description }}</p>
-      {% endif %}
-    </div>
-    <div>
-      <a class="btn btn-danger font-weight-bold" href="" role="button">{% translate "Subscribe!" %}</a>
+    <div class="d-flex flex-column justify-content-center w-100">
+      <div class="d-flex flex-row justify-content-between align-items-center">
+        <div class="d-inline-flex justify-content-start align-items-center">
+          {% if object.avatar %}
+            <img class="rounded-circle profile-view-avatar border m-3" src="{{ object.avatar.url }}" alt="{% translate "Profile Picture" %}">
+          {% endif %}
+          <h1 class="m-3">{{ object.username }}</h1>
+        </div>
+        <div>
+          <a class="btn btn-danger font-weight-bold" href="" role="button">{% translate "Subscribe!" %}</a>
+        </div>
+      </div>
     </div>
   </section>
 
-{% if object == request.user %}
-<!-- Action buttons -->
-<div class="row">
+  <section>
+    <!-- Tabs navs -->
+    <ul class="nav nav-tabs nav-justified mb-3" id="ex1" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="ex3-tab-1" data-bs-toggle="tab" href="#ex3-tabs-1" role="tab" aria-controls="ex3-tabs-1" aria-selected="true">
+          Videos
+        </a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="ex3-tab-2" data-bs-toggle="tab" href="#ex3-tabs-2" role="tab" aria-controls="ex3-tabs-2" aria-selected="false">
+          About
+        </a>
+      </li>
+    </ul>
+    <!-- Tabs navs -->
 
-  <div class="col-sm-12">
-    <!-- Your Stuff: Custom user template urls -->
-  </div>
-
-</div>
-<!-- End Action buttons -->
-{% endif %}
-
+    <!-- Tabs content -->
+    <div class="tab-content p-5" id="ex2-content">
+      <div class="tab-pane fade show active" id="ex3-tabs-1" role="tabpanel" aria-labelledby="ex3-tab-1">
+        {% if public_videos %}
+          <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+            <div class="carousel-inner">
+              {% for video in public_videos %}
+                <div class="carousel-item {{forloop.first|yesno:"active, ''"}}">
+                  <a href="{{ video.get_absolute_url }}">
+                    <div class="embed-responsive embed-responsive-16by9 ratio ratio-16x9 bg-dark rounded">
+                        <video class="embed-responsive-item w-100" disabled>
+                          <source src="{{ video.file.url }}">
+                        </video>
+                    </div>
+                  </a>
+                  <div class="carousel-caption d-none d-md-block">
+                    <h5 class="text-truncate">{{ video.title }}</h5>
+                    <p class="text-truncate">{{ video.description }}</p>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        {% else %}
+          <center><h4 class="mt-5">{{ object.username }} {% translate "hasn't uploaded any videos yet :-/" %}</h4></center>
+        {% endif %}
+      </div>
+      <div class="tab-pane fade mt-4" id="ex3-tabs-2" role="tabpanel" aria-labelledby="ex3-tab-2">
+        {% if object.channel_description %}
+            <div class="d-flex flex-col">
+              <p>{% translate object.channel_description %}</p>
+            </div>
+        {% else %}
+          <div class="d-flex flex-col">
+            <p>{% translate "Looks like there's nothing here yet." %}</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+<!-- Tabs content -->
+  </section>
 </div>
 {% endblock content %}
