@@ -71,10 +71,12 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount",
     "django_celery_beat",
     "webpack_loader",
+    "magic",
 ]
 
 LOCAL_APPS = [
     "view_it.users",
+    "view_it.videos",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
