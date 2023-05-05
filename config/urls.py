@@ -13,7 +13,7 @@ urlpatterns = [
     # User management
     path("@", include("view_it.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
-    # Your stuff: custom urls includes go here
+    path("video/", include("view_it.videos.urls", namespace="videos")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
