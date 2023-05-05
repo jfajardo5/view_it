@@ -1,0 +1,48 @@
+{% extends "videos/base.html" %}
+{% if object.status == "private" and request.user.username != object.user.username %}
+    {% comment "raise 403 error" %}
+    {% load 'django.views.defaults' %}
+    {% now "403" as permission_denied %}
+    {% include "403.html" %}
+    {% endcomment %}
+{% endif %}
+{% load static i18n %}
+
+{% block title %}View.it | {{ object.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <section class="border-bottom border-top p-4 mb-5 d-inline-flex justify-content-between align-items-center w-100">
+    <div class="d-flex flex-column justify-content-center w-100">
+      <div class="d-flex flex-row justify-content-between align-items-center">
+        <div class="d-inline-flex justify-content-start align-items-center">
+            <a class="m-3" href="{% url 'users:detail' request.user.username %}">
+            {% if object.user.avatar %}
+                <img class="rounded-circle profile-view-avatar border m-3" src="{{ object.user.avatar.url }}" alt="{% translate "Profile Picture" %}">
+            {% endif %}
+                {{ object.user.username }}
+            </a>
+        </div>
+        <div>
+          <a class="btn btn-danger font-weight-bold" href="" role="button">{% translate "Subscribe!" %}</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="embed-responsive embed-responsive-16by9 ratio ratio-16x9 bg-dark rounded">
+        <video class="embed-responsive-item w-100" allowfullscreen controls>
+            <source src="{{ object.file.url }}">
+        </video>
+    </div>
+    <h4 class="mt-4 mb-2">{{ object.title }}</h4>
+    {% if object.user.channel_description %}
+        <div class="d-flex flex-col">
+          <p>{{ object.user.channel_description }}</p>
+        </div>
+      {% endif %}
+  </section>
+</div>
+{% endblock content %}
