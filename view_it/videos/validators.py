@@ -11,12 +11,9 @@ def validate_video_file_type(value):
         "video/webm",  # WebM (VP8/VP9)
         "video/ogg",  # Ogg (Theora/Vorbis)
     ]
-    try:
-        file_type = magic.from_buffer(value.read(), mime=True)
-    except file_type not in allowed_types:
-        raise ValidationError
-
-    return
+    file_type = magic.from_buffer(value.read(), mime=True)
+    if file_type not in allowed_types:
+        raise ValidationError("Invalid file type")
 
 
 def validate_video_thumbnail_file_type(value):
@@ -28,9 +25,6 @@ def validate_video_thumbnail_file_type(value):
         "image/png",  # PNG (Portable Network Graphics)
         "image/gif",  # GIF (Graphics Interchange Format)
     ]
-    try:
-        file_type = magic.from_buffer(value.read(), mime=True)
-    except file_type not in allowed_types:
-        raise ValidationError
-
-    return
+    file_type = magic.from_buffer(value.read(), mime=True)
+    if file_type not in allowed_types:
+        raise ValidationError("Invalid file type")
