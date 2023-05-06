@@ -21,8 +21,12 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   build-essential \
   # psycopg2 dependencies
   libpq-dev \
-  #  python-magic dependencies
+  # python-magic dependencies
   libmagic1 \
+  libmagic-dev \
+  # ffmpeg-python dependencies
+  ffmpeg \
+  libavcodec-extra
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements .
@@ -54,6 +58,12 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   libpq-dev \
   # Translations dependencies
   gettext \
+  # python-magic dependencies
+  libmagic1 \
+  libmagic-dev \
+  # ffmpeg-python dependencies
+  ffmpeg \
+  libavcodec-extra \
   # cleaning up unused files
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
