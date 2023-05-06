@@ -12,12 +12,10 @@ from view_it.videos.models import Videos
 class VideoFactory(DjangoModelFactory):
     class Meta:
         model = Videos
-        django_get_or_create = ["url_slug"]
 
     title = Faker("sentence", nb_words=5)
     description = Faker("paragraph", nb_sentences=5)
     user = factory.SubFactory(UserFactory)
-    url_slug = Faker("uuid4")
 
     @post_generation
     def file(self, create: bool, extracted: Sequence[Any], **kwargs):
