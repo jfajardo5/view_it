@@ -8,6 +8,7 @@ def validate_video_file_type(value):
     """
     allowed_types = [
         "video/mp4",  # MP4 (MPEG-4 Part 14)
+        "video/x-m4v",  # MP4 variant used by Apple products
         "video/webm",  # WebM (VP8/VP9)
         "video/ogg",  # Ogg (Theora/Vorbis)
     ]
