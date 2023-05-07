@@ -5,26 +5,33 @@
 {% block title %}{{ user.username }}{% endblock %}
 
 {% block content %}
-  <section class="border-bottom border-top p-4 mb-5 d-inline-flex justify-content-between align-items-center w-100">
-    <div class="d-inline-flex flex-row justify-content-start align-items-center">
-      {% if user.avatar %}
-        <img class="rounded-circle profile-view-avatar border m-3" src="{{ user.avatar.url }}" alt="{% translate "Profile Picture" %}">
-      {% endif %}
-      <h1 class="m-3">{{ user.username }}</h1>
-    </div>
-    <div>
-      <a class="btn btn-secondary" href="{% url 'account_email' %}" role="button">{% translate "Manage Email Addresses" %}</a>
-    </div>
-  </section>
-  <section class="mb-5">
-    <form class="form-horizontal" method="post" action="{% url 'users:update' %}" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form|crispy }}
-      <div class="control-group">
-        <div class="controls">
-          <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
-        </div>
+  <div class="container p-5">
+
+    <section class="p-3 d-flex flex-row flex-wrap justify-content-md-between justify-content-center align-items-center text-center w-100">
+      <div class="d-inline-flex flex-row justify-content-start align-items-center">
+        {% if user.avatar %}
+          <div class="avatar-container m-3">
+            <img class="rounded-circle profile-view-avatar border" src="{{ object.avatar.url }}" alt="{% translate 'Profile Picture' %}">
+          </div>
+        {% endif %}
+        <h1 class="m-3">{{ user.username }}</h1>
       </div>
-    </form>
-  </section>
+      <div>
+        <a class="btn btn-secondary" href="{% url 'account_email' %}" role="button">{% translate "Manage Email Addresses" %}</a>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <form class="form-horizontal d-flex flex-column" method="post" action="{% url 'users:update' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="control-group">
+          <div class="controls d-flex flex-column">
+            <button type="submit" class="btn btn-primary">{% translate "Update" %} <i class="fa-solid fa-angles-right"></i></button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+  </div>
 {% endblock %}
