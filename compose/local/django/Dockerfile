@@ -14,8 +14,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   libpq-dev \
   # python-magic dependencies
   libmagic1 \
-  libmagic-dev \
-  # ffmpeg-python dependencies
+  # ffmpeg dependencies
   ffmpeg \
   libavcodec-extra
 
@@ -47,8 +46,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   gettext \
   # python-magic dependencies
   libmagic1 \
-  libmagic-dev \
-  # ffmpeg-python dependencies
+  # ffmpeg dependencies
   ffmpeg \
   libavcodec-extra \
   # cleaning up unused files
