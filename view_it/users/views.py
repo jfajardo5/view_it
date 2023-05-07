@@ -10,7 +10,7 @@ from view_it.videos.models import Videos
 User = get_user_model()
 
 
-class UserDetailView(LoginRequiredMixin, DetailView):
+class UserDetailView(DetailView):
     model = User
     slug_field = "username"
     slug_url_kwarg = "username"
@@ -18,8 +18,8 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.get_object()
-        public_videos = Videos.objects.filter(user=user, status="public")
-        private_videos = Videos.objects.filter(user=user, status="private")
+        public_videos = Videos.objects.filter(user=user, status="public").order_by("-uploaded_timestamp")
+        private_videos = Videos.objects.filter(user=user, status="private").order_by("-uploaded_timestamp")
         context["public_videos"] = public_videos
         context["private_videos"] = private_videos
         return context
