@@ -31,37 +31,37 @@ document.addEventListener('DOMContentLoaded', function () {
         [navigation],
       );
 
-      lazyLoad(sliderElement);
+      // lazyLoad(sliderElement);
     } catch (error) {
       console.error('Error initializing slider:', error);
     }
   });
 });
 
-function lazyLoad(sliderElement) {
-  const observer = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const video = entry.target.querySelector('video');
-          const source = video.querySelector('source');
+// function lazyLoad(sliderElement) {
+//   const observer = new IntersectionObserver(
+//     (entries, observer) => {
+//       entries.forEach((entry) => {
+//         if (entry.isIntersecting) {
+//           const video = entry.target.querySelector('video');
+//           const source = video.querySelector('source');
 
-          if (source.dataset.src) {
-            source.src = source.dataset.src;
-            source.removeAttribute('data-src');
-            video.load();
+//           if (source.dataset.src) {
+//             source.src = source.dataset.src;
+//             source.removeAttribute('data-src');
+//             video.load();
 
-            observer.unobserve(entry.target);
-          }
-        }
-      });
-    },
-    { rootMargin: '200px' },
-  );
+//             observer.unobserve(entry.target);
+//           }
+//         }
+//       });
+//     },
+//     { rootMargin: '200px' },
+//   );
 
-  const slides = sliderElement.querySelectorAll('.keen-slider__slide');
-  slides.forEach((slide) => observer.observe(slide));
-}
+//   const slides = sliderElement.querySelectorAll('.keen-slider__slide');
+//   slides.forEach((slide) => observer.observe(slide));
+// }
 
 function navigation(slider) {
   let wrapper, arrowLeft, arrowRight;
