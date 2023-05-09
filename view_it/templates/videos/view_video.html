@@ -16,11 +16,7 @@
 
     <section class="bg-black rounded shadow-lg">
       <div class="embed-responsive embed-responsive-16by9 d-flex justify-content-center align-items-center">
-        {% if object.thumbnail %}
-          <video class="embed-responsive-item w-100" allowfullscreen controls preload="none" poster="{{ object.thumbnail.url }}" style="max-width: 1280px; max-height: 720px;">
-        {% else %}
-          <video class="embed-responsive-item w-100" allowfullscreen controls style="max-width: 1280px; max-height: 720px;">
-        {% endif %}
+        <video class="embed-responsive-item w-100" allowfullscreen controls {% if object.thumbnail %}preload="none" poster="{{ object.thumbnail.url }}"{% endif %} style="max-width: 1280px; max-height: 720px;">
             <source src="{{ object.file.url }}">
         </video>
       </div>

@@ -10,7 +10,7 @@
 {% block content %}
     {% if public_videos %}
         <section class="pt-4">
-            <div class="p-5 m-1 bg-dark text-light rounded shadow">
+            <div class="p-5 m-5 bg-dark text-light rounded shadow">
                 <h3 class="mb-3">{% translate "Latest Uploads" %} ({{ public_videos.count }})</h3>
                 <div>
                     <div class="keen-slider video-slider">
@@ -18,7 +18,8 @@
                         <div class="p-1 text-white keen-slider__slide number-slide{{forloop.counter}}">
                             <a class="text-decoration-none text-dark" href="{% url 'videos:detail' video.url_slug %}">
                                 <div class="embed-responsive embed-responsive-16by9 ratio ratio-16x9 bg-black rounded shadow">
-                                <video class="embed-responsive-item w-100 tns-lazy-img" preload="none" poster="{{ video.thumbnail.url }}" disabled>
+                                <video class="embed-responsive-item w-100 tns-lazy-img" {% if video.thumbnail %}preload="none" poster="{{ video.thumbnail.url }}"{% endif %} disabled>
+                                    <source class="tns-lazy-img" src="{{ video.file.url }}">
                                 </video>
                                 </div>
                                 <p class="text-truncate m-0 text-light font-weight-bold">{% translate video.title %}</p>

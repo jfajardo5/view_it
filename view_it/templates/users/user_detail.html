@@ -7,19 +7,19 @@
 
 {% endblock template_javascript %}
 
-{% block title %}View.it | @{{ object.username }}{% endblock %}
+{% block title %}@{{ object.username }}{% endblock %}
 
 {% block content %}
 
-  <section class="w-100">
-      <div class="d-flex flex-row justify-content-between align-items-center">
+  <section>
+      <div class="p-5 d-flex flex-row justify-content-between align-items-center">
         <div class="d-inline-flex justify-content-start align-items-center">
           {% if object.avatar %}
             <div class="avatar-container m-3">
               <img class="rounded-circle profile-view-avatar border" src="{{ object.avatar.url }}" alt="{% translate 'Profile Picture' %}" style="width: 5rem; height: 5rem;">
             </div>
           {% endif %}
-          <h1 class="m-3 text-dark">{{ object.username }}</h1>
+          <h1 class="text-dark">{{ object.username }}</h1>
         </div>
       {% if object.username == request.user.username %}
         <div class="p-3">
@@ -33,85 +33,88 @@
     </div>
   </section>
 
-  <section class="m-4 shadow-lg">
-    <!-- Tabs navs -->
-    <ul class="nav nav-tabs nav-justified bg-primary rounded border-none" id="profile" role="tablist">
-      <li class="nav-item" role="presentation">
-        <a class="nav-link active link-light border-dark" id="profile-tab-1" data-bs-toggle="tab" href="#profile-tabs-1" role="tab" aria-controls="profile-tabs-1" aria-selected="true">
-          Videos
-        </a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link link-light border-dark" id="profile-tab-2" data-bs-toggle="tab" href="#profile-tabs-2" role="tab" aria-controls="profile-tabs-2" aria-selected="false">
-          About
-        </a>
-      </li>
-    </ul>
-    <!-- Tabs navs -->
+  <section>
+    <div class="p-3">
+        <!-- Tabs navs -->
+      <ul class="nav nav-tabs nav-justified bg-primary rounded border-none" id="profile" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active link-light border-dark" id="profile-tab-1" data-bs-toggle="tab" href="#profile-tabs-1" role="tab" aria-controls="profile-tabs-1" aria-selected="true">
+            Videos
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link link-light border-dark" id="profile-tab-2" data-bs-toggle="tab" href="#profile-tabs-2" role="tab" aria-controls="profile-tabs-2" aria-selected="false">
+            About
+          </a>
+        </li>
+      </ul>
+      <!-- Tabs navs -->
 
-    <!-- Tabs content -->
-    <div class="tab-content p-5 bg-dark rounded-bottom text-white" id="ex2-content">
-      <div class="tab-pane fade show active" id="profile-tabs-1" role="tabpanel" aria-labelledby="profile-tab-1">
+      <!-- Tabs content -->
+      <div class="tab-content p-5 bg-dark rounded-bottom text-white" id="ex2-content">
+        <div class="tab-pane fade show active" id="profile-tabs-1" role="tabpanel" aria-labelledby="profile-tab-1">
 
-        {% if public_videos %}
-          <h3 class="mb-3">{% translate "Latest Uploads" %} ({{ public_videos.count }})</h3>
-          <div>
-            <div class="keen-slider video-slider">
-              {% for video in public_videos %}
-                <div class="p-1 keen-slider__slide number-slide{{forloop.counter}}">
-                  <a class="text-decoration-none text-dark" href="{% url 'videos:detail' video.url_slug %}">
-                    <div class="embed-responsive embed-responsive-16by9 ratio ratio-16x9 bg-black rounded shadow">
-                      <video class="embed-responsive-item w-100 tns-lazy-img" preload="none" poster="{{ video.thumbnail.url }}" disabled>
-                      </video>
-                    </div>
-                    <p class="text-truncate m-0 text-white font-weight-bold">{% translate video.title %}</p>
-                  </a>
-                  <small>{{ video.uploaded_timestamp|timesince }} ago</small>
-                </div>
-              {% endfor %}
-            </div>
-          </div>
-
-        {% else %}
-          <center><h4 class="mt-5">{{ object.username }} {% translate "hasn't uploaded any videos yet :-/" %}</h4></center>
-        {% endif %}
-
-        {% if private_videos and object.username == request.user.username %}
-          <hr class="mb-5 mt-5">
-          <h3 class="mb-3">{% translate "Your Private Videos" %} ({{ private_videos.count }})</h3>
-          <section>
-            <div class="keen-slider video-slider">
-              {% for video in private_videos %}
-                <div class="p-1 keen-slider__slide number-slide{{forloop.counter}}">
-                  <a class="text-decoration-none text-dark" href="{% url 'videos:detail' video.url_slug %}">
-                    <div class="embed-responsive embed-responsive-16by9 ratio ratio-16x9 bg-black rounded shadow">
-                        <video class="embed-responsive-item w-100 tns-lazy-img" preload="none" poster="{{ video.thumbnail.url }}" disabled>
+          {% if public_videos %}
+            <h3 class="mb-3">{% translate "Latest Uploads" %} ({{ public_videos.count }})</h3>
+            <div>
+              <div class="keen-slider video-slider">
+                {% for video in public_videos %}
+                  <div class="p-1 keen-slider__slide number-slide{{forloop.counter}}">
+                    <a class="text-decoration-none text-dark" href="{% url 'videos:detail' video.url_slug %}">
+                      <div class="embed-responsive embed-responsive-16by9 ratio ratio-16x9 bg-black rounded shadow">
+                        <video class="embed-responsive-item w-100 tns-lazy-img" {% if video.thumbnail %}preload="none" poster="{{ video.thumbnail.url }}"{% endif %} disabled>
                           <source class="tns-lazy-img" src="{{ video.file.url }}">
                         </video>
-                    </div>
-                    <p class="text-truncate m-0 text-white font-weight-bold">{% translate video.title %}</p>
-                  </a>
-                  <small>{{ video.uploaded_timestamp }}</small>
-                </div>
-              {% endfor %}
+                      </div>
+                      <p class="text-truncate m-0 text-white font-weight-bold">{% translate video.title %}</p>
+                    </a>
+                    <small>{{ video.uploaded_timestamp|timesince }} ago</small>
+                  </div>
+                {% endfor %}
               </div>
-          </section>
-        {% endif %}
-
-      </div>
-      <div class="tab-pane fade mt-4" id="profile-tabs-2" role="tabpanel" aria-labelledby="profile-tab-2">
-        {% if object.channel_description %}
-            <div class="d-flex flex-col">
-              <p class="lead">{% translate object.channel_description|linebreaksbr %}</p>
             </div>
-        {% else %}
-          <div class="d-flex flex-col">
-            <p class="lead">{% translate "Looks like there's nothing here yet." %}</p>
-          </div>
-        {% endif %}
+
+          {% else %}
+            <center><h4 class="mt-5">{{ object.username }} {% translate "hasn't uploaded any videos yet :-/" %}</h4></center>
+          {% endif %}
+
+          {% if private_videos and object.username == request.user.username %}
+            <hr class="mb-5 mt-5">
+            <h3 class="mb-3">{% translate "Your Private Videos" %} ({{ private_videos.count }})</h3>
+            <section>
+              <div class="keen-slider video-slider">
+                {% for video in private_videos %}
+                  <div class="p-1 keen-slider__slide number-slide{{forloop.counter}}">
+                    <a class="text-decoration-none text-dark" href="{% url 'videos:detail' video.url_slug %}">
+                      <div class="embed-responsive embed-responsive-16by9 ratio ratio-16x9 bg-black rounded shadow">
+                          <video class="embed-responsive-item w-100 tns-lazy-img" {% if video.thumbnail %}preload="none" poster="{{ video.thumbnail.url }}"{% endif %} disabled>
+                            <source class="tns-lazy-img" src="{{ video.file.url }}">
+                          </video>
+                      </div>
+                      <p class="text-truncate m-0 text-white font-weight-bold">{% translate video.title %}</p>
+                    </a>
+                    <small>{{ video.uploaded_timestamp|timesince }}</small>
+                  </div>
+                {% endfor %}
+                </div>
+            </section>
+          {% endif %}
+
+        </div>
+        <div class="tab-pane fade mt-4" id="profile-tabs-2" role="tabpanel" aria-labelledby="profile-tab-2">
+          {% if object.channel_description %}
+              <div class="d-flex flex-col">
+                <p class="lead">{% translate object.channel_description|linebreaksbr %}</p>
+              </div>
+          {% else %}
+            <div class="d-flex flex-col">
+              <p class="lead">{% translate "Looks like there's nothing here yet." %}</p>
+            </div>
+          {% endif %}
+        </div>
       </div>
+    <!-- Tabs content -->
     </div>
-  <!-- Tabs content -->
   </section>
 
 {% endblock content %}
