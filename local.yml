@@ -107,3 +107,11 @@ services:
     command: npm run dev
     ports:
       - '3000:3000'
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.1
+    container_name: view_it_local_meilisearch
+    ports:
+      - '7700:7700'
+    volumes:
+      - ./data.ms:/data.ms

@@ -16,6 +16,7 @@ urlpatterns = [
     path("@", include("view_it.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     path("video/", include("view_it.videos.urls", namespace="videos")),
+    path("search/", include("view_it.search.urls", namespace="search")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

@@ -75,3 +75,13 @@ services:
       - django
     volumes:
       - production_django_media:/usr/share/nginx/media:ro
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.1
+    container_name: view_it_production_meilisearch
+    volumes:
+      - production_meilisearch_data:/data.ms
+    env_file:
+      - ./.envs/.production/.meilisearch
+    ports:
+      - '7700:7700'
