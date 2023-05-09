@@ -12,3 +12,6 @@ REDIS_URL=redis://redis:6379/0
 # Flower
 CELERY_FLOWER_USER=WrAxGFqgJAAkFpPbrQtfZmIgPFYYaJoc
 CELERY_FLOWER_PASSWORD=eOv8lIQfIC4Y0rpFJ4TLKMu5ZGAkVkh0DuKryyv9AyjlcUYbygA6DMycpncQHwv6
+
+# Meilisearch
+MEILISEARCH_HOST=http://meilisearch:7700

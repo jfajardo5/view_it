@@ -111,7 +111,16 @@ services:
   meilisearch:
     image: getmeili/meilisearch:v1.1
     container_name: view_it_local_meilisearch
+    depends_on:
+      - django
+      - redis
+      - postgres
+      - celeryworker
+      - celerybeat
+      - flower
     ports:
       - '7700:7700'
     volumes:
       - ./data.ms:/data.ms
+    env_file:
+      - ./.envs/.local/.django

@@ -1,8 +1,8 @@
 from django import forms
 
+from view_it.search.tasks import add_video_to_search_index
 from view_it.videos.models import Videos
-
-from .tasks import create_thumbnail_from_video
+from view_it.videos.tasks import create_thumbnail_from_video
 
 
 class VideoUploadForm(forms.ModelForm):
@@ -15,5 +15,8 @@ class VideoUploadForm(forms.ModelForm):
         if commit:
             if not video.thumbnail:
                 create_thumbnail_from_video.delay(video.file.url, video.id)
+
+            if video.status == "public":
+                add_video_to_search_index.delay(video.id)
 
         return video

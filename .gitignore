@@ -336,3 +336,5 @@ webpack-stats.json
 .env
 .envs/*
 !.envs/.local/
+
+data.ms

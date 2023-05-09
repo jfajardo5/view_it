@@ -313,3 +313,6 @@ WEBPACK_LOADER = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+# Meilisearch
+MEILISEARCH_HOST = env("MEILISEARCH_HOST", default="http://meilisearch:7700")
