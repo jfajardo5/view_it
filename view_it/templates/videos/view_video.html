@@ -12,53 +12,61 @@
 
 {% block content %}
 
-  <section class="bg-dark rounded">
-      <div class="embed-responsive embed-responsive-16by9 ratio ratio-16x9 m-0">
+  <div class="container-xl p-2">
+
+    <section class="bg-black rounded shadow-lg">
+      <div class="embed-responsive embed-responsive-16by9 d-flex justify-content-center align-items-center">
         {% if object.thumbnail %}
-          <video class="embed-responsive-item w-100" allowfullscreen controls preload="none" poster="{{ object.thumbnail.url }}">
+          <video class="embed-responsive-item w-100" allowfullscreen controls preload="none" poster="{{ object.thumbnail.url }}" style="max-width: 1280px; max-height: 720px;">
         {% else %}
-          <video class="embed-responsive-item w-100" allowfullscreen controls>
+          <video class="embed-responsive-item w-100" allowfullscreen controls style="max-width: 1280px; max-height: 720px;">
         {% endif %}
             <source src="{{ object.file.url }}">
         </video>
       </div>
-  </section>
+    </section>
 
-  <section class="bg-white">
-    <div class="d-flex flex-column justify-content-center w-100">
-      <div class="m-4 d-flex flex-row justify-content-between align-items-center text-center">
-        <div class="d-flex flex-column justify-content-center align-items-start text-center">
-          <h4 class="m-0">{{ object.title }}</h4>
-          <span>Uploaded by: <a class="text-decoration-none text-dark" href="{% url 'users:detail' object.user.username %}">@{{ object.user.username }}</a></span>
-          <small class="text-muted">{{ object.uploaded_timestamp|timesince }} ago</small>
+    <section class="bg-light shadow-lg">
+      <div class="d-flex flex-column justify-content-center w-100">
+        <div class="m-4 d-flex flex-row justify-content-between align-items-center text-center">
+          <div class="d-flex flex-column justify-content-center align-items-start text-center">
+            <div class="d-inline-flex flex-row justify-content-center align-items-center">
+              {% comment %} <div class="avatar-container m-3">
+                <img class="rounded-circle profile-view-avatar border" src="{{ object.user.avatar.url }}" alt="{% translate 'Profile Picture' %}" style="width:3rem; height: 3rem;">
+              </div> {% endcomment %}
+              <h4 class="">{{ object.title }}</h4>
+            </div>
+            <span>Uploaded by: <a class="text-decoration-none text-dark" href="{% url 'users:detail' object.user.username %}">@{{ object.user.username }}</a></span>
+            <small class="text-muted">{{ object.uploaded_timestamp|timesince }} ago</small>
+          </div>
+          {% if object.user and object.user.id == request.user.id%}
+            <div>
+              <a class="btn btn-primary font-weight-bold shadow" href="{% url 'videos:update' object.url_slug %}" role="button">{% translate "Update Details" %} <i class="fa-solid fa-gear"></i></a>
+            </div>
+          {% else %}
+            <div>
+              <a class="btn btn-danger font-weight-bold shadow" href="" role="button">{% translate "Subscribe!" %} <i class="fa-solid fa-bell"></i></a>
+            </div>
+          {% endif %}
         </div>
-        {% if object.user and object.user.id == request.user.id%}
-          <div>
-            <a class="btn btn-primary font-weight-bold" href="{% url 'videos:update' object.url_slug %}" role="button">{% translate "Update Details" %}</a>
-          </div>
-        {% else %}
-          <div>
-            <a class="btn btn-danger font-weight-bold" href="" role="button"><i class="fa-solid fa-bell"></i> {% translate "Subscribe!" %}</a>
-          </div>
-        {% endif %}
       </div>
-    </div>
     {% if object.description %}
-    <div class="accordion accordion-flush p-4 mb-4" id="accordionFlushExample">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingOne">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-            <span class="text-truncate">{{object.description}}</span>
-          </button>
-        </h2>
-        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">
-            <p class="lead">{{ object.description|linebreaksbr }}</p>
+      <div class="accordion accordion-flush p-4 mb-4" id="accordionFlushExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              <span class="text-truncate">{{object.description}}</span>
+            </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              <p class="lead">{{ object.description|linebreaksbr }}</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     {% endif %}
-  </section>
+    </section>
+  </div>
 
 {% endblock content %}

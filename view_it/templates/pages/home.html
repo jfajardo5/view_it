@@ -1,1 +1,37 @@
 {% extends "base.html" %}
+{% load static i18n %}
+{% load render_bundle from webpack_loader %}
+{% block template_javascript %}
+
+  {% render_bundle 'video_slider' 'js' %}
+
+{% endblock template_javascript %}
+
+{% block content %}
+    {% if public_videos %}
+        <section class="pt-4">
+            <div class="p-5 m-1 bg-dark text-light rounded shadow">
+                <h3 class="mb-3">{% translate "Latest Uploads" %} ({{ public_videos.count }})</h3>
+                <div>
+                    <div class="keen-slider video-slider">
+                    {% for video in public_videos %}
+                        <div class="p-1 text-white keen-slider__slide number-slide{{forloop.counter}}">
+                            <a class="text-decoration-none text-dark" href="{% url 'videos:detail' video.url_slug %}">
+                                <div class="embed-responsive embed-responsive-16by9 ratio ratio-16x9 bg-black rounded shadow">
+                                <video class="embed-responsive-item w-100 tns-lazy-img" preload="none" poster="{{ video.thumbnail.url }}" disabled>
+                                </video>
+                                </div>
+                                <p class="text-truncate m-0 text-light font-weight-bold">{% translate video.title %}</p>
+                            </a>
+                            <div  class="d-flex flex-column">
+                                <small>Uploaded by: <a class="link-light" href="{% url 'users:detail' video.user.username %}">@{{ video.user.username }}</a></small>
+                                <small>{{ video.uploaded_timestamp|timesince }} ago</small>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock content %}

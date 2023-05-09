@@ -16,33 +16,33 @@
         <div class="d-inline-flex justify-content-start align-items-center">
           {% if object.avatar %}
             <div class="avatar-container m-3">
-              <img class="rounded-circle profile-view-avatar border" src="{{ object.avatar.url }}" alt="{% translate 'Profile Picture' %}">
+              <img class="rounded-circle profile-view-avatar border" src="{{ object.avatar.url }}" alt="{% translate 'Profile Picture' %}" style="width: 5rem; height: 5rem;">
             </div>
           {% endif %}
-          <h1 class="m-3">{{ object.username }}</h1>
+          <h1 class="m-3 text-dark">{{ object.username }}</h1>
         </div>
       {% if object.username == request.user.username %}
-        <div>
-          <a class="btn btn-secondary font-weight-bold" href="{% url 'users:update' %}" role="button">{% translate "Edit Channel Info" %}</a>
+        <div class="p-3">
+          <a class="btn btn-primary font-weight-bold shadow" href="{% url 'users:update' %}" role="button">{% translate "Edit Channel Info" %}</a>
         </div>
       {% else %}
-        <div>
+        <div class="p-3">
           <a class="btn btn-danger font-weight-bold" href="" role="button">{% translate "Subscribe!" %}</a>
         </div>
       {% endif %}
     </div>
   </section>
 
-  <section class="mb-4">
+  <section class="m-4 shadow-lg">
     <!-- Tabs navs -->
-    <ul class="nav nav-tabs nav-justified bg-white rounded" id="profile" role="tablist">
+    <ul class="nav nav-tabs nav-justified bg-primary rounded border-none" id="profile" role="tablist">
       <li class="nav-item" role="presentation">
-        <a class="nav-link active" id="profile-tab-1" data-bs-toggle="tab" href="#profile-tabs-1" role="tab" aria-controls="profile-tabs-1" aria-selected="true">
+        <a class="nav-link active link-light border-dark" id="profile-tab-1" data-bs-toggle="tab" href="#profile-tabs-1" role="tab" aria-controls="profile-tabs-1" aria-selected="true">
           Videos
         </a>
       </li>
       <li class="nav-item" role="presentation">
-        <a class="nav-link" id="profile-tab-2" data-bs-toggle="tab" href="#profile-tabs-2" role="tab" aria-controls="profile-tabs-2" aria-selected="false">
+        <a class="nav-link link-light border-dark" id="profile-tab-2" data-bs-toggle="tab" href="#profile-tabs-2" role="tab" aria-controls="profile-tabs-2" aria-selected="false">
           About
         </a>
       </li>
@@ -50,27 +50,27 @@
     <!-- Tabs navs -->
 
     <!-- Tabs content -->
-    <div class="tab-content p-5 bg-white rounded" id="ex2-content">
+    <div class="tab-content p-5 bg-dark rounded-bottom text-white" id="ex2-content">
       <div class="tab-pane fade show active" id="profile-tabs-1" role="tabpanel" aria-labelledby="profile-tab-1">
 
         {% if public_videos %}
           <h3 class="mb-3">{% translate "Latest Uploads" %} ({{ public_videos.count }})</h3>
-          <section>
-            <div class="keen-slider video-slider text-center">
+          <div>
+            <div class="keen-slider video-slider">
               {% for video in public_videos %}
-                <div class="keen-slider__slide number-slide{{forloop.counter}}">
+                <div class="p-1 keen-slider__slide number-slide{{forloop.counter}}">
                   <a class="text-decoration-none text-dark" href="{% url 'videos:detail' video.url_slug %}">
-                    <div class="embed-responsive embed-responsive-16by9 ratio ratio-16x9 bg-dark rounded">
+                    <div class="embed-responsive embed-responsive-16by9 ratio ratio-16x9 bg-black rounded shadow">
                       <video class="embed-responsive-item w-100 tns-lazy-img" preload="none" poster="{{ video.thumbnail.url }}" disabled>
                       </video>
                     </div>
-                    <p class="text-truncate lead">{% translate video.title %}</p>
+                    <p class="text-truncate m-0 text-white font-weight-bold">{% translate video.title %}</p>
                   </a>
                   <small>{{ video.uploaded_timestamp|timesince }} ago</small>
                 </div>
               {% endfor %}
             </div>
-          </section>
+          </div>
 
         {% else %}
           <center><h4 class="mt-5">{{ object.username }} {% translate "hasn't uploaded any videos yet :-/" %}</h4></center>
@@ -80,20 +80,16 @@
           <hr class="mb-5 mt-5">
           <h3 class="mb-3">{% translate "Your Private Videos" %} ({{ private_videos.count }})</h3>
           <section>
-            <div class="keen-slider video-slider text-center">
+            <div class="keen-slider video-slider">
               {% for video in private_videos %}
-                <div class="keen-slider__slide number-slide{{forloop.counter}}">
+                <div class="p-1 keen-slider__slide number-slide{{forloop.counter}}">
                   <a class="text-decoration-none text-dark" href="{% url 'videos:detail' video.url_slug %}">
-                    <div class="embed-responsive embed-responsive-16by9 ratio ratio-16x9 bg-dark rounded">
-                        {% if video.thumbnail %}
-                          <video class="embed-responsive-item w-100 tns-lazy-img" preload="none" poster="{{ video.thumbnail.url }}" disabled>
-                        {% else %}
-                          <video class="embed-responsive-item w-100 tns-lazy-img" disabled>
-                        {% endif %}
-                            <source class="tns-lazy-img" src="{{ video.file.url }}">
+                    <div class="embed-responsive embed-responsive-16by9 ratio ratio-16x9 bg-black rounded shadow">
+                        <video class="embed-responsive-item w-100 tns-lazy-img" preload="none" poster="{{ video.thumbnail.url }}" disabled>
+                          <source class="tns-lazy-img" src="{{ video.file.url }}">
                         </video>
                     </div>
-                    <p class="text-truncate lead">{% translate video.title %}</p>
+                    <p class="text-truncate m-0 text-white font-weight-bold">{% translate video.title %}</p>
                   </a>
                   <small>{{ video.uploaded_timestamp }}</small>
                 </div>

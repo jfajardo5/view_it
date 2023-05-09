@@ -8,7 +8,7 @@
 
 {% block inner %}
 
-<div class="container p-5">
+<div class="container d-flex flex-column p-5 align-items-center">
 
   <h1>{% translate "Sign In" %}</h1>
 
@@ -48,15 +48,15 @@
     {% endif %}
   {% endif %}
 
-  <section>
-    <form class="login d-flex flex-column" method="POST" action="{% url 'account_login' %}">
+  <section class="col-md-6">
+    <form class="login d-flex flex-column justify-content-center" method="POST" action="{% url 'account_login' %}">
       {% csrf_token %}
       {{ form|crispy }}
       {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
       {% endif %}
       <a class="button secondaryAction mb-2" href="{% url 'account_reset_password' %}">{% translate "Forgot Password?" %}</a>
-      <button class="primaryAction btn btn-primary" type="submit">{% translate "Sign In" %}</button>
+      <button class="primaryAction btn btn-primary shadow" type="submit">{% translate "Sign In" %}</button>
     </form>
   </section>
 </div>

@@ -6,22 +6,22 @@
 
 {% block content %}
 
-  <div class="container p-5">
+  <div class="container p-5 d-flex flex-column align-items-sm-center">
 
-    <section>
+    <section class="col-md-6 col-sm-12">
       <div class="mb-4 border-bottom">
         <h1>{% translate "Upload a video." %}</h1>
       </div>
     </section>
 
-    <section>
+    <section class="col-md-6 col-sm-12">
       <form class="signup d-flex flex-column" id="signup_form" method="post" action="{% url 'videos:upload' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
         {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
-        <button class="btn btn-primary" type="submit">{% translate "Upload" %} <i class="fa-solid fa-angles-right"></i></button>
+        <button class="btn btn-primary shadow" type="submit">{% translate "Upload" %} <i class="fa-solid fa-angles-right"></i></button>
       </form>
     </section>
 
