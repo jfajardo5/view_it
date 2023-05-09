@@ -3,19 +3,16 @@ import os
 import ffmpeg
 from django.conf import settings
 from django.core.files.base import ContentFile
-from django.utils.crypto import get_random_string
 
 from config import celery_app
 from view_it.videos.models import Videos
 
 
-@celery_app.task()
+@celery_app.task(ignore_result=True)
 def create_thumbnail_from_video(video_url: str, video_id: int):
     input_file_path = os.path.join(settings.APPS_DIR, video_url.lstrip("/"))
 
-    # Generate a random alphanumeric string for the thumbnail file name
-    thumbnail_file_name = f"{get_random_string(20)}.jpg"
-    thumbnail_file_path = f"{os.path.dirname(input_file_path)}{thumbnail_file_name}"
+    thumbnail_file_path = f"{os.path.dirname(input_file_path)}output.jpg"
 
     # Extract video metadata using ffprobe
     try:
@@ -44,7 +41,7 @@ def create_thumbnail_from_video(video_url: str, video_id: int):
     # Save the thumbnail to the video model and delete the local file
     video = Videos.objects.get(id=video_id)
     with open(thumbnail_file_path, "rb") as file:
-        content_file = ContentFile(file.read(), name=thumbnail_file_name)
+        content_file = ContentFile(file.read(), name=thumbnail_file_path)
         video.thumbnail.save(content_file.name, content_file)
 
     os.remove(thumbnail_file_path)

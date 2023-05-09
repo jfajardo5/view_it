@@ -1,13 +1,23 @@
+import os
 import uuid
 
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
+from django.utils.crypto import get_random_string
 from django.utils.translation import gettext_lazy as _
 
 from .validators import validate_video_file_type, validate_video_thumbnail_file_type
 
 User = get_user_model()
+
+
+def upload_to(instance, filename):
+    _, filename_ext = os.path.splitext(filename)
+    now = timezone.now()
+    date_string = now.strftime(f"%Y/%m/%d/%H/{get_random_string(20)}{filename_ext}")
+    return date_string
 
 
 class Videos(models.Model):
@@ -46,7 +56,7 @@ class Videos(models.Model):
 
     file = models.FileField(
         _("Video File Path"),
-        upload_to="videos/%Y/%m/%d/%H/",
+        upload_to=upload_to,
         null=False,
         blank=False,
         validators=[validate_video_file_type],
@@ -55,7 +65,7 @@ class Videos(models.Model):
 
     thumbnail = models.FileField(
         _("Thumbnail File Path"),
-        upload_to="thumbnails/%Y/%m/%d/%H/",
+        upload_to=upload_to,
         null=True,
         blank=True,
         validators=[validate_video_thumbnail_file_type],
