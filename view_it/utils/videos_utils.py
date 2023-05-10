@@ -2,9 +2,70 @@ import os
 import subprocess
 from io import BytesIO
 
+import ffmpeg
+from django.conf import settings
+from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import SimpleUploadedFile
 from faker import Faker
 from PIL import Image
+
+from view_it.videos.models import Videos
+
+
+def create_thumbnail_from_video(video_id: int, video_url: str):
+    """
+    Create a thumbnail from a video file using ffmpeg.
+    """
+    # Create the full path to the input video file
+    input_file_path = os.path.join(settings.APPS_DIR, video_url.lstrip("/"))
+
+    print(f"VIDEO_URL_IN_UTILS: {video_url}")
+    print(f"INPUT FILE PATH: {input_file_path}")
+
+    # Create the path to the output thumbnail file
+    thumbnail_file_path = f"{os.path.dirname(input_file_path)}/output.jpg"
+
+    # Extract video metadata using ffprobe
+    try:
+        probe = ffmpeg.probe(input_file_path)
+    except ffmpeg.Error as error:
+        # Log the error and re-raise it
+        print(f"ffprobe stderr: {error.stderr.decode('utf-8')}")
+        raise error
+
+    # Calculate the time offset for the thumbnail and get the video width
+    duration = float(probe["format"]["duration"])
+    time_offset = duration / 2
+    video_stream = next((stream for stream in probe["streams"] if stream["codec_type"] == "video"), None)
+    width = int(video_stream["width"])
+
+    # Create the thumbnail using ffmpeg
+    try:
+        (
+            ffmpeg.input(input_file_path, ss=time_offset)
+            .filter("scale", width, -1)
+            .output(thumbnail_file_path, vframes=1)
+            .overwrite_output()
+            .run(capture_stdout=True, capture_stderr=True)
+        )
+    except ffmpeg.Error as error:
+        # If there's an error, re-raise it so that it can be handled elsewhere
+        raise error
+
+    # Retrieve the video from the database
+    video = Videos.objects.get(id=video_id)
+
+    # Open the thumbnail file and create a Django ContentFile from it
+    with open(thumbnail_file_path, "rb") as file:
+        content_file = ContentFile(file.read(), name=thumbnail_file_path)
+
+    # Save the thumbnail to the video model
+    video.thumbnail.save(content_file.name, content_file)
+
+    # Delete the local thumbnail file now that it's been saved to the model
+    os.remove(thumbnail_file_path)
+
+    return True
 
 
 def create_test_image(output_dir: str, output_file_type: str) -> SimpleUploadedFile:
