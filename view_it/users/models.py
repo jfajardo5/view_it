@@ -3,7 +3,7 @@ from django.db.models import CharField, EmailField, FileField, TextField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from .validators import validate_avatar_file_type, validate_name, validate_unique_email
+from .validators import validate_avatar_file_type, validate_unique_email
 
 
 class User(AbstractUser):
@@ -17,7 +17,6 @@ class User(AbstractUser):
 
     email = EmailField(
         _("email address"),
-        blank=True,
         unique=True,
         validators=[validate_unique_email],
         help_text=_("Required. Must be an unique and valid email address."),
@@ -28,22 +27,6 @@ class User(AbstractUser):
         max_length=30,
         unique=True,
         help_text=_("Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."),
-    )
-
-    first_name = CharField(
-        _("First Name"),
-        null=True,
-        validators=[validate_name],
-        help_text="Required. 30 characters or fewer. Alphabetical characters only.",
-        max_length=30,
-    )
-
-    last_name = CharField(
-        _("Last Name"),
-        null=True,
-        validators=[validate_name],
-        help_text="Required. 30 characters or fewer. Alphabetical characters only.",
-        max_length=30,
     )
 
     avatar = FileField(
