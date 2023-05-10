@@ -2,7 +2,7 @@ import pytest
 from django.urls import reverse
 
 from view_it.users.tests.factories import UserFactory
-from view_it.utils.test_utils import create_test_image, create_test_video
+from view_it.utils.videos_utils import create_test_image, create_test_video
 from view_it.videos.models import Videos
 
 

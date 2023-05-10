@@ -5,7 +5,7 @@ import pytest
 from django.utils.translation import gettext_lazy as _
 from factory import Faker
 
-from view_it.utils.test_utils import create_test_image, create_test_video
+from view_it.utils.videos_utils import create_test_image, create_test_video
 from view_it.videos.forms import VideoUploadForm
 
 

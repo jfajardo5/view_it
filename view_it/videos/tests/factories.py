@@ -18,32 +18,6 @@ class VideoFactory(DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
 
     @post_generation
-    def file(self, create: bool, extracted: Sequence[Any], **kwargs):
-        file = (
-            extracted
-            if extracted
-            else Faker(
-                "file_name",
-                category="video",
-                extension=".mp4",
-            ).evaluate(None, None, extra={"locale": None})
-        )
-        self.file = file
-
-    @post_generation
-    def thumbnail(self, create: bool, extracted: Sequence[Any], **kwargs):
-        thumbnail = (
-            extracted
-            if extracted
-            else Faker(
-                "file_name",
-                category="image",
-                extension=".png",
-            ).evaluate(None, None, extra={"locale": None})
-        )
-        self.thumbnail = thumbnail
-
-    @post_generation
     def status(self, create: bool, extracted: Sequence[Any], **kwargs):
         status = extracted if extracted else "public"
         self.status = status
