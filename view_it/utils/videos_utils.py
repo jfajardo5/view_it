@@ -19,9 +19,6 @@ def create_thumbnail_from_video(video_id: int, video_url: str):
     # Create the full path to the input video file
     input_file_path = os.path.join(settings.APPS_DIR, video_url.lstrip("/"))
 
-    print(f"VIDEO_URL_IN_UTILS: {video_url}")
-    print(f"INPUT FILE PATH: {input_file_path}")
-
     # Create the path to the output thumbnail file
     thumbnail_file_path = f"{os.path.dirname(input_file_path)}/output.jpg"
 
