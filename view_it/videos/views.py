@@ -16,7 +16,9 @@ class HomePageView(SuccessMessageMixin, TemplateView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
-        context["public_videos"] = Videos.objects.filter(status="public").order_by("-uploaded_timestamp")[:20]
+        context["public_videos"] = (
+            Videos.objects.filter(status="public").order_by("-uploaded_timestamp").select_related("user")[:20]
+        )
 
         return context
 
