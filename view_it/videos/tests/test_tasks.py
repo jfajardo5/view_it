@@ -30,7 +30,7 @@ class TestGenerateThumbnail:
         assert not video.thumbnail
 
         # Call the generate_thumbnail function for the video object.
-        result = generate_thumbnail(video_id=video.id, video_url=video.file.url)
+        result = generate_thumbnail(video_id=video.id)
 
         # Get the video object from the database to check if the thumbnail was generated.
         with_thumbnail = Videos.objects.get(id=video.id)

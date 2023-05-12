@@ -6,8 +6,8 @@ class UsersConfig(AppConfig):
     name = "view_it.users"
     verbose_name = _("Users")
 
-    def ready(self):
-        try:
-            import view_it.users.signals  # noqa
-        except ImportError:
-            pass
+    # def ready(self):
+    #     try:
+    #         import view_it.users.signals  # noqa
+    #     except ImportError:
+    #         pass
