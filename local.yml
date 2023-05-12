@@ -120,7 +120,5 @@ services:
       - flower
     ports:
       - '7700:7700'
-    volumes:
-      - ./data.ms:/data.ms
     env_file:
       - ./.envs/.local/.django
