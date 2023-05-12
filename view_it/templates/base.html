@@ -49,15 +49,17 @@
             <!-- Collapse -->
             <div class="collapse navbar-collapse" id="navbarCollapse">
               <!-- Nav -->
-              <div class="navbar-nav col-lg-6 mx-auto">
+              <div class="navbar-nav col-lg-6 mx-auto dropdown">
                 <div class="input-group">
-                  <input type="text" class="form-control rounded-start" placeholder="Search">
+                  <input id="meili" type="text" class="form-control rounded-start" data-bs-toggle="dropdown" aria-expanded="false" placeholder="Search">
                   <div class="input-group-append">
                     <button class="btn btn-primary rounded-end" type="button">
                       <i class="fa fa-search"></i>
                     </button>
                   </div>
+                  <ul id="meili-results" class="dropdown-menu w-100 animate__animated animate__fadeIn" aria-labelledby="meili"></ul>
                 </div>
+
               </div>
               {% if request.user.is_authenticated %}
                 <div class="dropdown navbar-nav ps-lg-5 mt-lg-0 mt-3">
