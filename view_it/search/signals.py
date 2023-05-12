@@ -13,12 +13,10 @@ User = get_user_model()
 @receiver(post_save, sender=User)
 def user_created(sender, instance, created, **kwargs):
     """
-    A signal that adds an user to the search index when created.
+    A signal that adds an user to the search index when created or updated.
     """
-    # Check if the user was just created
-    if created:
-        # Add it to the search index asynchronously
-        transaction.on_commit(lambda: add_user_to_search_index.delay(user_id=instance.id))
+    # Add it to the search index asynchronously
+    transaction.on_commit(lambda: add_user_to_search_index.delay(user_id=instance.id))
 
 
 # Receiver for Videos' post_save signal
@@ -26,10 +24,8 @@ def user_created(sender, instance, created, **kwargs):
 def video_created(sender, instance, created, **kwargs):
     """
     A signal that creates a thumbnail from the video file and adds the video to the search index
-    when a new video is saved.
+    when a video is created or updated.
     """
-    # Check if the video was just created
-    if created:
-        # If the video is public, add it to the search index asynchronously
-        if instance.status == "public":
-            transaction.on_commit(lambda: add_video_to_search_index.delay(video_id=instance.id))
+    # If the video is public, add it to the search index asynchronously
+    if instance.status == "public":
+        transaction.on_commit(lambda: add_video_to_search_index.delay(video_id=instance.id))

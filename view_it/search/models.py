@@ -42,7 +42,7 @@ class Search:
     # Add a document to the index. A document is a record in MeiliSearch.
     def add_document_to_index(self, index_name, document):
         index = self.get_index(index_name=index_name)
-        index.add_documents([document])
+        index.add_documents([document], "id")
         # Return the task. A task in MeiliSearch represents an asynchronous operation.
         return self.client.get_task(0)
 
