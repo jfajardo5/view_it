@@ -32,10 +32,11 @@
     {% block template_javascript %}
       <!-- place template specific Javascript using this tag -->
     {% endblock %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.0.0/themes/satellite-min.css" integrity="sha256-p/rGN4RGy6EDumyxF9t7LKxWGg6/MZfGhJM/asKkqvA=" crossorigin="anonymous">
 
   </head>
 
-  <body class="container bg-light">
+  <body class="container bg-black text-light">
       <header>
         <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-dark px-4 py-3 shadow">
             <!-- Logo -->
@@ -49,17 +50,11 @@
             <!-- Collapse -->
             <div class="collapse navbar-collapse" id="navbarCollapse">
               <!-- Nav -->
-              <div class="navbar-nav col-lg-6 mx-auto dropdown">
-                <div class="input-group">
-                  <input id="meili" type="text" class="form-control rounded-start" data-bs-toggle="dropdown" aria-expanded="false" placeholder="Search">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary rounded-end" type="button">
-                      <i class="fa fa-search"></i>
-                    </button>
+              <div class="navbar-nav col-lg-6 mx-auto">
+                  <div class="input-group">
+                    <div id="meili" class="w-100"></div>
+                    <div id="meili-results" class="w-100 position-absolute" style="z-index: 5; top:2.6rem"></div>
                   </div>
-                  <ul id="meili-results" class="dropdown-menu w-100 animate__animated animate__fadeIn" aria-labelledby="meili"></ul>
-                </div>
-
               </div>
               {% if request.user.is_authenticated %}
                 <div class="dropdown navbar-nav ps-lg-5 mt-lg-0 mt-3">

@@ -22,7 +22,7 @@
       </div>
     </section>
 
-    <section class="bg-light shadow-lg">
+    <section class="bg-dark shadow-lg">
       <div class="d-flex flex-column justify-content-center w-100">
         <div class="m-4 d-flex flex-row justify-content-between align-items-center text-center">
           <div class="d-flex flex-column justify-content-center align-items-start text-center">
@@ -32,7 +32,7 @@
               </div> {% endcomment %}
               <h4 class="">{{ object.title }}</h4>
             </div>
-            <span>Uploaded by: <a class="text-decoration-none text-dark" href="{% url 'users:detail' object.user.username %}">@{{ object.user.username }}</a></span>
+            <span>Uploaded by: <a class="text-decoration-none text-light" href="{% url 'users:detail' object.user.username %}">@{{ object.user.username }}</a></span>
             <small class="text-muted">{{ object.uploaded_timestamp|timesince }} ago</small>
           </div>
           {% if object.user and object.user.id == request.user.id%}
@@ -48,9 +48,9 @@
       </div>
     {% if object.description %}
       <div class="accordion accordion-flush p-4 mb-4" id="accordionFlushExample">
-        <div class="accordion-item">
+        <div class="accordion-item bg-dark text-light">
           <h2 class="accordion-header" id="flush-headingOne">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
               <span class="text-truncate">{{object.description}}</span>
             </button>
           </h2>

@@ -19,7 +19,7 @@
               <img class="rounded-circle profile-view-avatar border" src="{{ object.avatar.url }}" alt="{% translate 'Profile Picture' %}" style="width: 5rem; height: 5rem;">
             </div>
           {% endif %}
-          <h1 class="text-dark">{{ object.username }}</h1>
+          <h1>{{ object.username }}</h1>
         </div>
       {% if object.username == request.user.username %}
         <div class="p-3">
