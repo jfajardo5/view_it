@@ -35,7 +35,12 @@ class Search:
         if index_name == "users":
             index.update_searchable_attributes(["username"])
         elif index_name == "videos":
-            index.update_searchable_attributes(["title"])
+            index.update_searchable_attributes(
+                [
+                    "title",
+                    "description",
+                ]
+            )
 
         return index
 
@@ -53,9 +58,10 @@ class Search:
         # Prepare the document
         document = {
             "id": video.id,
-            "url": str(video.get_absolute_url()),
             "title": video.title,
-            "description": video.description,
+            "url": str(video.get_absolute_url()),
+            "description": video.description if video.description else "",
+            "thumbnail": video.thumbnail.url if video.thumbnail else "",
             "user": video.user.username,
         }
 
