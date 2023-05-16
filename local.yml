@@ -91,6 +91,12 @@ services:
     ports:
       - '5555:5555'
     command: /start-flower
+    depends_on:
+      - redis
+      - postgres
+      - mailhog
+      - celeryworker
+      - celerybeat
 
   node:
     build:
@@ -117,7 +123,6 @@ services:
       - postgres
       - celeryworker
       - celerybeat
-      - flower
     ports:
       - '7700:7700'
     env_file:
