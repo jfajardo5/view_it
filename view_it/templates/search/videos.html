@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% load render_bundle from webpack_loader %}
+
+{% block javascript %}
+
+    {% render_bundle 'vendors' 'js' attrs='defer' %}
+
+    {% render_bundle 'search' 'js' attrs='defer' %}
+
+{% endblock javascript %}
+
+{% block content %}
+<h2>Search</h2>
+<div id="meilisearch"></div>
+<div class="mb-5" id="hits"></div>
+{% endblock %}

@@ -9,6 +9,7 @@ module.exports = {
     project: path.resolve(__dirname, '../view_it/static/js/project'),
     vendors: path.resolve(__dirname, '../view_it/static/js/vendors'),
     video_slider: path.resolve(__dirname, '../view_it/static/js/video_slider'),
+    search: path.resolve(__dirname, '../view_it/static/js/search'),
   },
   output: {
     path: path.resolve(__dirname, '../view_it/static/webpack_bundles/'),

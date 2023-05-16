@@ -167,6 +167,7 @@ class Videos(models.Model):
         with open(thumbnail_file_path, "rb") as file:
             content_file = ContentFile(file.read(), name=thumbnail_file_path)
             self.thumbnail.save(content_file.name, content_file)
+            self.save()
 
         # Remove the local thumbnail file after it has been saved to the model
         os.remove(thumbnail_file_path)
