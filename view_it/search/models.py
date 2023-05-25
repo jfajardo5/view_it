@@ -11,7 +11,7 @@ User = get_user_model()
 class Search:
     # Initialize MeiliSearch client with provided host in settings
     def __init__(self):
-        self.client = meilisearch.Client(settings.MEILISEARCH_HOST)
+        self.client = meilisearch.Client(settings.MEILI_HOST)
 
     # Get or create a search index. An index is where the documents are stored.
     def get_index(self, index_name):
