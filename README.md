@@ -1,6 +1,6 @@
 # View It
 
-## View It is a fun FOSS video hosting platform I am building as a side project.
+## View It is a fun FOSS video hosting platform.
 
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
