@@ -10,7 +10,7 @@ django-celery-beat==2.5.0  # https://github.com/celery/django-celery-beat
 flower==1.2.0  # https://github.com/mher/flower
 python-magic==0.4.27 # https://github.com/ahupp/python-magic
 ffmpeg-python==0.2.0 # https://github.com/kkroening/ffmpeg-python
-meilisearch==0.26.0 # https://github.com/meilisearch/meilisearch-python
+meilisearch==0.27.0 # https://github.com/meilisearch/meilisearch-python
 
 # Django
 # ------------------------------------------------------------------------------
