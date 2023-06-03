@@ -1,6 +1,6 @@
 # View It
 
-## View-It is a video hosting platform. It is a fun hobby project. 
+## View-It is a video hosting platform. It is a fun hobby project.
 
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
