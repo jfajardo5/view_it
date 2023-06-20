@@ -7,7 +7,7 @@ redis==4.5.5  # https://github.com/redis/redis-py
 hiredis==2.2.3  # https://github.com/redis/hiredis-py
 celery==5.3.1  # pyup: < 6.0  # https://github.com/celery/celery
 django-celery-beat==2.5.0  # https://github.com/celery/django-celery-beat
-flower==1.2.0  # https://github.com/mher/flower
+flower==2.0.0  # https://github.com/mher/flower
 python-magic==0.4.27 # https://github.com/ahupp/python-magic
 ffmpeg-python==0.2.0 # https://github.com/kkroening/ffmpeg-python
 meilisearch==0.28.0 # https://github.com/meilisearch/meilisearch-python
